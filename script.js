@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api/orders';
+const API_URL = 'https://freefiretopup-hd4w.onrender.com/api/orders';
 
 // Open modal
 function openForm(packageName) {

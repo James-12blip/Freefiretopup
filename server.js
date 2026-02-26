@@ -8,16 +8,16 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname)); // Serve your HTML files
+app.use(express.static(__dirname));
 
-// MongoDB Connection - DIRECT LINK HERE (replace with your actual URI)
+// MongoDB Connection
 const MONGODB_URI = 'mongodb+srv://Worldclassshipingg:GDC9TkUd3tW5VYIZ@cluster0.wqutkjs.mongodb.net/worldclassshipingg?retryWrites=true&w=majority';
 
 mongoose.connect(MONGODB_URI)
   .then(() => console.log('✅ MongoDB Connected'))
   .catch(err => console.error('❌ MongoDB Error:', err));
 
-// Order Schema (defined directly here, no separate file needed)
+// Order Schema
 const orderSchema = new mongoose.Schema({
   package: { type: String, required: true },
   uid: { type: String, required: true },
@@ -28,9 +28,7 @@ const orderSchema = new mongoose.Schema({
 
 const Order = mongoose.model('Order', orderSchema);
 
-// API ROUTES (all in one file)
-
-// Get all orders
+// API Routes
 app.get('/api/orders', async (req, res) => {
   try {
     const orders = await Order.find().sort({ date: -1 });
@@ -40,7 +38,6 @@ app.get('/api/orders', async (req, res) => {
   }
 });
 
-// Create new order
 app.post('/api/orders', async (req, res) => {
   try {
     const { package, uid, code } = req.body;
@@ -52,18 +49,15 @@ app.post('/api/orders', async (req, res) => {
   }
 });
 
-// Update status
 app.put('/api/orders/:id', async (req, res) => {
   try {
-    const { status } = req.body;
-    await Order.findByIdAndUpdate(req.params.id, { status });
+    await Order.findByIdAndUpdate(req.params.id, { status: req.body.status });
     res.json({ message: 'Updated!' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-// Delete order
 app.delete('/api/orders/:id', async (req, res) => {
   try {
     await Order.findByIdAndDelete(req.params.id);
@@ -73,8 +67,8 @@ app.delete('/api/orders/:id', async (req, res) => {
   }
 });
 
-// Start server
-const PORT = 3000;
+// ✅ FIXED: Use dynamic port for Render
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
