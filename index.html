@@ -44,17 +44,16 @@
 <!-- PAYMENT MODAL -->
 <div id="paymentModal" class="modal">
   <div class="modal-content">
+    <span class="close" onclick="closeForm()">✖</span>
     <h3 id="selectedPackage"></h3>
 
-    <p><strong>Payment Method:</strong> Google Play Gift Card Only</p>
+    <p><strong>Enter your Free Fire UID before paying</strong></p>
 
-    <input type="text" id="cardCode" placeholder="Enter Google Play Gift Card Code">
-    <input type="text" id="uid" placeholder="Enter Free Fire UID">
+    <input type="text" id="uid" placeholder="Enter Free Fire UID" required>
 
-    <button onclick="processPayment()">Submit Payment</button>
+    <button onclick="goToPaystack()">Pay Now</button>
 
     <p id="message"></p>
-    <span class="close" onclick="closeForm()">✖</span>
   </div>
 </div>
 

@@ -1,51 +1,44 @@
 const API_URL = 'https://freefiretopup-hd4w.onrender.com/api/orders';
 
-// Open modal
+const paystackLinks = {
+  "19999 Diamonds": "https://paystack.shop/pay/tllxmb78ri",
+  "31000 Diamonds": "https://paystack.shop/pay/937dw7dkgf",
+  "50200 Diamonds": "https://paystack.shop/pay/uh0uz-e0jo",
+  "100060 Diamonds": "https://paystack.shop/pay/cmi0magsg5"
+};
+
 function openForm(packageName) {
   document.getElementById("paymentModal").style.display = "flex";
   document.getElementById("selectedPackage").innerText = "Package: " + packageName;
   localStorage.setItem("currentPackage", packageName);
 }
 
-// Close modal
 function closeForm() {
   document.getElementById("paymentModal").style.display = "none";
   document.getElementById("message").innerText = "";
-  document.getElementById("cardCode").value = "";
   document.getElementById("uid").value = "";
 }
 
-// Submit to MongoDB
-async function processPayment() {
-  const cardCode = document.getElementById("cardCode").value.trim();
+function goToPaystack() {
   const uid = document.getElementById("uid").value.trim();
   const packageName = localStorage.getItem("currentPackage");
   const messageEl = document.getElementById("message");
 
-  if (!cardCode || !uid) {
+  if (!uid) {
     messageEl.style.color = "#ff4444";
-    messageEl.innerText = "❌ Please fill all fields";
+    messageEl.innerText = "❌ Please enter your Free Fire UID";
     return;
   }
 
-  try {
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ package: packageName, uid, code: cardCode })
-    });
+  // Save UID + package to backend
+  fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ package: packageName, uid })
+  });
 
-    if (response.ok) {
-      messageEl.style.color = "#00ff88";
-      messageEl.innerText = "✅ Order submitted! We will verify your payment shortly.";
-      setTimeout(closeForm, 2000);
-    } else {
-      throw new Error('Failed to submit');
-    }
-  } catch (error) {
-    messageEl.style.color = "#ff4444";
-    messageEl.innerText = "❌ Error: " + error.message;
-  }
+  // Redirect to the correct live Paystack page
+  window.location.href = paystackLinks[packageName];
 }
 
 window.onclick = function(event) {
