@@ -39,6 +39,15 @@
       <button onclick="openForm('100060 Diamonds')">Buy Now</button>
     </div>
   </section>
+
+  <!-- PROXY SERVER SECTION -->
+  <section class="packages proxy-section">
+    <div class="card proxy-card">
+      <h2>🌐 Proxy Server</h2>
+      <p class="price">₦7,000</p>
+      <button onclick="openForm('Proxy Server')">Buy Now</button>
+    </div>
+  </section>
 </main>
 
 <!-- PAYMENT MODAL -->
@@ -47,9 +56,10 @@
     <span class="close" onclick="closeForm()">✖</span>
     <h3 id="selectedPackage"></h3>
 
-    <p><strong>Enter your Free Fire UID before paying</strong></p>
+    <p id="inputLabel"><strong>Enter your Free Fire UID before paying</strong></p>
 
-    <input type="text" id="uid" placeholder="Enter Free Fire UID" required>
+    <input type="text" id="uid" placeholder="Enter Free Fire UID">
+    <input type="tel" id="phone" placeholder="Enter your phone number" style="display: none;">
 
     <button onclick="goToPaystack()">Pay Now</button>
 

@@ -187,3 +187,28 @@ button {
   width: 90%;
   max-width: 400px;
 }
+/* Proxy Server Section Styling */
+.proxy-section {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.proxy-card {
+  background: linear-gradient(135deg, rgba(255,204,0,0.15), rgba(255,204,0,0.05));
+  border: 2px solid #ffcc00;
+  max-width: 300px;
+  width: 100%;
+}
+
+.proxy-card h2 {
+  color: #ffcc00;
+}
+
+.proxy-card:hover {
+  box-shadow: 0 15px 30px rgba(255,204,0,0.3);
+}
+
+#phone {
+  display: none;
+}
